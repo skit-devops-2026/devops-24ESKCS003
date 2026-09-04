@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Loan Approval Predictor</title>
+    <style>
+        /* CSS styling of the website */
+        body {
+            background-color: #f4f4f9;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 30px;
+        }
+        .form-container {
+            background-color: white;
+            width: 400px;
+            margin: 0 auto;
+            padding: 25px;
+            border: 2px solid #d3d3d3;
+            border-radius: 8px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 15px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box; 
+        }
+        button {
+            width: 100%;
+            background-color: #007bff;
+            color: white;
+            padding: 12px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        /* This box is hidden by default and it is shown by JavaScript */
+        #result-box {
+            margin-top: 20px;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+            display: none; 
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Loan Approval System</h2>
+        
+        <form id="loanForm">
+            <label>Loan Amount ($):</label>
+            <input type="number" name="loan_amount" required>
+
+            <label>Annual Income ($):</label>
+            <input type="number" name="income" required>
+
+            <label>Property Value ($):</label>
+            <input type="number" name="property_value" required>
+
+            <label>Loan Term (Months):</label>
+            <select name="loan_term">
+                <option value="120">10 Years</option>
+                <option value="240">20 Years</option>
+                <option value="360" selected>30 Years</option>
+            </select>
+
+            <label>Combined Loan-to-Value Ratio (e.g., 0.75):</label>
+            <input type="number" step="0.01" name="combined_loan_to_value_ratio" required>
+
+            <label>Debt-to-Income Ratio:</label>
+            <select name="debt_to_income_ratio">
+                <option value="<30%">Less than 30%</option>
+                <option value="30%-<36%">30% - 36%</option>
+                <option value="36%-<50%">36% - 50%</option>
+                <option value=">50%">&gt; 50%</option>
+            </select>
+
+            <label>Loan Type:</label>
+            <select name="loan_type">
+                <option value="1">Conventional</option>
+                <option value="2">FHA</option>
+                <option value="3">VA</option>
+            </select>
+
+            <label>Loan Purpose:</label>
+            <select name="loan_purpose">
+                <option value="1">Home Purchase</option>
+                <option value="2">Refinance</option>
+                <option value="3">Home Improvement</option>
+            </select>
+
+            <label>Applicant Age:</label>
+            <select name="applicant_age">
+                <option value="25-34">25-34</option>
+                <option value="35-44">35-44</option>
+                <option value="45-54">45-54</option>
+                <option value="55-64">55-64</option>
+                <option value=">64">&gt; 64</option>
+            </select>
+
+            <button type="submit">Check Loan Status</button>
+        </form>
+
+        <div id="result-box"></div>
+    </div>
+
+    <script>
+        // JavaScript to handle user events and manipulate DOM elements
+        document.getElementById('loanForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Stop page from reloading
+
+            let form = document.getElementById('loanForm');
+            let formData = new FormData(form);
+
+            // AJAX request to fetch data from the Flask API
+            fetch('/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // DOM Manipulation: Making changes in the website 
+                let resultBox = document.getElementById('result-box');
+                resultBox.style.display = 'block';
+
+                if (data.prediction === "Approved") {
+                    resultBox.innerHTML = "Status: APPROVED ✅";
+                    resultBox.style.backgroundColor = "#d4edda";
+                    resultBox.style.color = "#155724";
+                    resultBox.style.border = "1px solid #c3e6cb";
+                } else if (data.prediction === "Denied") {
+                    resultBox.innerHTML = "Status: DENIED ❌";
+                    resultBox.style.backgroundColor = "#f8d7da";
+                    resultBox.style.color = "#721c24";
+                    resultBox.style.border = "1px solid #f5c6cb";
+                } else {
+                    alert("Error: Could not calculate prediction.");
+                }
+            })
+            .catch(error => {
+                alert("Server error occurred!");
+                console.error('Error:', error);
+            });
+        });
+    </script>
+
+</body>
+</html>
