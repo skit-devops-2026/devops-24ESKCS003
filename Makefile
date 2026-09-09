@@ -11,7 +11,7 @@
 .PHONY: install test build run docker-build docker-up
 
 install:
-	pip install -r requirements.txt
+	pip install -r requirements.txt pytest
 
 test:
 	pytest
