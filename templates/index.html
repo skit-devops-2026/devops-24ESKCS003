@@ -5,64 +5,103 @@
     <style>
       /* CSS styling of the website */
       body {
-        background-color: #f4f6f9;
+        background-color: #1e272e;
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 40px;
+        color: #d2dae2;
       }
       .form-container {
-        background-color: #ffffff;
+        background-color: #2c3e50;
         width: 450px;
         margin: 0 auto;
-        padding: 30px;
-        border: 1px solid #dcdcdc;
-        border-radius: 8px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        padding: 40px;
+        border: 2px solid #34495e;
+        border-radius: 12px;
+        box-shadow: 0 15px 25px rgba(0, 0, 0, 0.5);
       }
       h2 {
         text-align: center;
-        color: #2c3e50;
+        color: #0fbcf9;
         margin-top: 0;
         margin-bottom: 25px;
+        font-size: 26px;
+      }
+      fieldset {
+        border: 1px solid #485460;
+        border-radius: 6px;
+        margin-bottom: 25px;
+        padding: 15px 20px 20px 20px;
+      }
+      legend {
+        color: #0fbcf9;
+        padding: 0 10px;
+        font-size: 16px;
       }
       label {
-        font-weight: bold;
         display: block;
         margin-top: 15px;
-        color: #333;
+        color: #d2dae2;
         font-size: 14px;
       }
-      input,
+      input[type="number"],
       select {
         width: 100%;
-        padding: 10px;
-        margin-top: 5px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
+        padding: 12px;
+        margin-top: 8px;
+        border: 2px solid #485460;
+        border-radius: 6px;
         box-sizing: border-box;
         font-size: 14px;
-        background-color: #fafafa;
+        background-color: #1e272e;
+        color: #d2dae2;
+        transition: all 0.2s ease-in-out;
       }
-      input:focus,
+      input[type="number"]:hover,
+      select:hover {
+        background-color: #2f3640;
+        border-color: #0fbcf9;
+      }
+      input[type="number"]:focus,
       select:focus {
-        border-color: #3498db;
         outline: none;
-        background-color: #fff;
+      }
+      .radio-group {
+        margin-top: 10px;
+        font-size: 14px;
+      }
+      .radio-group input {
+        margin-right: 5px;
+        margin-left: 10px;
+      }
+      .radio-group input:first-child {
+        margin-left: 0;
+      }
+      #liveLoanAmount {
+        display: block;
+        color: #05c46b;
+        font-size: 12px;
+        margin-top: 6px;
+        min-height: 14px;
+      }
+      #ltvTooltip {
+        display: none;
+        color: #ffda79;
+        font-size: 12px;
+        margin-top: 6px;
       }
       button {
         width: 100%;
-        background-color: #3498db;
-        color: white;
-        padding: 12px;
-        margin-top: 25px;
+        background-color: #0fbcf9;
+        color: #1e272e;
+        padding: 15px;
+        margin-top: 15px;
         border: none;
-        border-radius: 4px;
+        border-radius: 6px;
         cursor: pointer;
-        font-size: 16px;
+        font-size: 18px;
         font-weight: bold;
-      }
-      button:hover {
-        background-color: #2980b9;
+        transition: transform 0.2s;
       }
       /* This box is hidden by default and it is shown by JavaScript */
       #result-box {
@@ -72,71 +111,77 @@
         font-weight: bold;
         font-size: 18px;
         display: none;
-        border-radius: 4px;
+        border-radius: 6px;
       }
     </style>
   </head>
   <body>
-    <div class="form-container">
-      <h2>Loan Approval System</h2>
+    <div class="form-container" id="mainContainer">
+      <h2><strong><u>Loan Approval System</u></strong></h2>
 
       <form id="loanForm">
-        <label>Loan Amount ($):</label>
-        <input type="number" name="loan_amount" required />
+        
+        <fieldset>
+          <legend><strong>Financial Details</strong></legend>
+          
+          <label><strong>Loan Amount</strong> <i>($)</i>:</label>
+          <input type="number" name="loan_amount" id="loanAmountInput" required />
+          <span id="liveLoanAmount"></span>
 
-        <label>Annual Income ($):</label>
-        <input type="number" name="income" required />
+          <label><strong>Annual Income</strong> <i>($)</i>:</label>
+          <input type="number" name="income" required />
 
-        <label>Property Value ($):</label>
-        <input type="number" name="property_value" required />
+          <label><strong>Property Value</strong> <i>($)</i>:</label>
+          <input type="number" name="property_value" required />
 
-        <label>Loan Term (Months):</label>
-        <select name="loan_term">
-          <option value="120">10 Years</option>
-          <option value="240">20 Years</option>
-          <option value="360" selected>30 Years</option>
-        </select>
+          <label><strong>Debt-to-Income Ratio</strong>:</label>
+          <select name="debt_to_income_ratio">
+            <option value="<30%">Less than 30%</option>
+            <option value="30%-<36%">30% - 36%</option>
+            <option value="36%-<50%">36% - 50%</option>
+            <option value=">50%">&gt; 50%</option>
+          </select>
+        </fieldset>
 
-        <label>Combined Loan-to-Value Ratio (e.g., 0.75):</label>
-        <input
-          type="number"
-          step="0.01"
-          name="combined_loan_to_value_ratio"
-          required
-        />
+        <fieldset>
+          <legend><strong>Loan Specifications</strong></legend>
+          
+          <label><strong>Loan Term</strong> <i>(Months)</i>:</label>
+          <select name="loan_term">
+            <option value="120">10 Years</option>
+            <option value="240">20 Years</option>
+            <option value="360" selected>30 Years</option>
+          </select>
 
-        <label>Debt-to-Income Ratio:</label>
-        <select name="debt_to_income_ratio">
-          <option value="<30%">Less than 30%</option>
-          <option value="30%-<36%">30% - 36%</option>
-          <option value="36%-<50%">36% - 50%</option>
-          <option value=">50%">&gt; 50%</option>
-        </select>
+          <label><strong>Combined Loan-to-Value Ratio</strong> <i>(e.g., 0.75)</i>:</label>
+          <input type="number" step="0.01" name="combined_loan_to_value_ratio" id="ltvInput" required />
+          <span id="ltvTooltip">Value must be a decimal like 0.75</span>
 
-        <label>Loan Type:</label>
-        <select name="loan_type">
-          <option value="1">Conventional</option>
-          <option value="2">FHA</option>
-          <option value="3">VA</option>
-        </select>
+          <label><strong>Loan Type</strong>:</label>
+          <div class="radio-group">
+            <input type="radio" name="loan_type" value="1" required checked> Conventional
+            <input type="radio" name="loan_type" value="2"> FHA
+            <input type="radio" name="loan_type" value="3"> VA
+          </div>
 
-        <label>Loan Purpose:</label>
-        <select name="loan_purpose">
-          <option value="1">Home Purchase</option>
-          <option value="2">Refinance</option>
-          <option value="3">Home Improvement</option>
-        </select>
+          <label><strong>Loan Purpose</strong>:</label>
+          <select name="loan_purpose">
+            <option value="1">Home Purchase</option>
+            <option value="2">Refinance</option>
+            <option value="3">Home Improvement</option>
+          </select>
 
-        <label>Applicant Age:</label>
-        <select name="applicant_age">
-          <option value="25-34">25-34</option>
-          <option value="35-44">35-44</option>
-          <option value="45-54">45-54</option>
-          <option value="55-64">55-64</option>
-          <option value=">64">&gt; 64</option>
-        </select>
+          <label><strong>Applicant Age</strong>:</label>
+          <select name="applicant_age">
+            <option value="25-34">25-34</option>
+            <option value="35-44">35-44</option>
+            <option value="45-54">45-54</option>
+            <option value="55-64">55-64</option>
+            <option value=">64">&gt; 64</option>
+          </select>
+        </fieldset>
 
-        <button type="submit">Check Loan Status</button>
+        <button type="submit" id="submitBtn">Check Loan Status</button>
       </form>
 
       <div id="result-box"></div>
@@ -144,6 +189,48 @@
 
     <script>
       // JavaScript to handle user events and manipulate DOM elements
+      let formElements = document.querySelectorAll("input[type='number'], select");
+      for (let i = 0; i < formElements.length; i++) {
+        formElements[i].addEventListener("focus", function () {
+          this.style.backgroundColor = "#485460";
+          this.style.borderColor = "#0fbcf9";
+          this.style.boxShadow = "0 0 8px rgba(15, 188, 249, 0.6)";
+        });
+        formElements[i].addEventListener("blur", function () {
+          this.style.backgroundColor = "";
+          this.style.borderColor = "";
+          this.style.boxShadow = "";
+        });
+      }
+
+      let btn = document.getElementById("submitBtn");
+      btn.addEventListener("mouseenter", function () {
+        this.style.backgroundColor = "#0097e6";
+        this.style.transform = "scale(1.02)";
+      });
+      btn.addEventListener("mouseleave", function () {
+        this.style.backgroundColor = "#0fbcf9";
+        this.style.transform = "scale(1)";
+      });
+
+      document.getElementById("loanAmountInput").addEventListener("keyup", function() {
+        let val = this.value;
+        let displayElement = document.getElementById("liveLoanAmount");
+        if(val) {
+          displayElement.innerHTML = "Requesting: $" + val;
+        } else {
+          displayElement.innerHTML = "";
+        }
+      });
+
+      let ltv = document.getElementById("ltvInput");
+      ltv.addEventListener("mouseenter", function() {
+        document.getElementById("ltvTooltip").style.display = "block";
+      });
+      ltv.addEventListener("mouseleave", function() {
+        document.getElementById("ltvTooltip").style.display = "none";
+      });
+
       document
         .getElementById("loanForm")
         .addEventListener("submit", function (event) {
@@ -165,14 +252,14 @@
 
               if (data.prediction === "Approved") {
                 resultBox.innerHTML = "Status: APPROVED ✅";
-                resultBox.style.backgroundColor = "#d4edda";
-                resultBox.style.color = "#155724";
-                resultBox.style.border = "1px solid #c3e6cb";
+                resultBox.style.backgroundColor = "#05c46b";
+                resultBox.style.color = "#1e272e";
+                resultBox.style.border = "2px solid #05c46b";
               } else if (data.prediction === "Denied") {
                 resultBox.innerHTML = "Status: DENIED ❌";
-                resultBox.style.backgroundColor = "#f8d7da";
-                resultBox.style.color = "#721c24";
-                resultBox.style.border = "1px solid #f5c6cb";
+                resultBox.style.backgroundColor = "#ff3f34";
+                resultBox.style.color = "#1e272e";
+                resultBox.style.border = "2px solid #ff3f34";
               } else {
                 alert("Error: Could not calculate prediction.");
               }
