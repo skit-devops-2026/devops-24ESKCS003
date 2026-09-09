@@ -1,4 +1,4 @@
-# <Project Name>
+# Loan Approval Project
 
 > Replace every angle-bracket placeholder below. The hygiene check in CI will
 > fail until you do.
@@ -7,17 +7,17 @@
 
 | Roll No. | Name | GitHub username |
 |---|---|---|
-| <roll> | <name> | <username> |
+| 24ESKCS003 | Aaryan Singh Shekhawat | Aaryan-Singh-Shekhawat |
 
 ## About
 
-<Two or three sentences on what this application does.>
+This is a machine learning-based web application that predicts loan approval statuses. It takes user financial inputs through a web form and utilizes a trained Random Forest classifier to instantly evaluate whether the loan should be approved or denied.
 
 ## Tech stack
 
-- Frontend: <e.g. React>
-- Backend: <e.g. Node.js / Express>
-- Database: <e.g. PostgreSQL>
+- Frontend: HTML5 / CSS3
+- Backend: Python (Flask)
+- Database: None (File-based / In-memory)
 
 ## Running locally
 
