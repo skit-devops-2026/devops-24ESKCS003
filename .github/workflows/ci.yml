@@ -68,7 +68,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.repository }}-backend:${{ github.sha }}
+          tags: ghcr.io/skit-devops-2026/devops-24eskcs003-backend:${{ github.sha }}
       # ... and the same for ./frontend
 
   # ---------------------------------------------------------------------------
