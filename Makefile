@@ -2,25 +2,25 @@
 # The CI pipeline calls these targets, so the names must not change.
 #
 # Examples:
-#   Node    install: npm ci          test: npm test        build: npm run build
+#   Node    install: npm ci             test: npm test      build: npm run build
 #   Python  install: pip install -r requirements.txt
-#                                    test: pytest          build: echo "no build step"
+#           test: pytest                build: echo "no build step"
 #   Java    install: ./mvnw -B dependency:go-offline
-#                                    test: ./mvnw test     build: ./mvnw package
+#           test: ./mvnw test           build: ./mvnw package
 
 .PHONY: install test build run docker-build docker-up
 
 install:
-	@echo "TODO: install dependencies" && exit 1
+	pip install -r requirements.txt
 
 test:
-	@echo "TODO: run the test suite" && exit 1
+	pytest
 
 build:
-	@echo "TODO: build the project" && exit 1
+	@echo "no build step for Python"
 
 run:
-	@echo "TODO: start the app locally" && exit 1
+	python app.py
 
 # Needed from M4 onwards
 docker-build:
