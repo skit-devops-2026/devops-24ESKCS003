@@ -6,7 +6,11 @@ import numpy as np
 app = Flask(__name__)
 
 # Load the saved model and scaler
-model = joblib.load('models/random_forest_champion.pkl')
+try:
+    model = joblib.load('models/random_forest_champion.pkl')
+except Exception as e:
+    model = None
+    print(f"Warning: Predictive model failed to load. {e}")
 scaler = joblib.load('models/scaler.pkl')
 
 @app.route('/')
