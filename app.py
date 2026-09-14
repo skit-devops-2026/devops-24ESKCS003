@@ -6,8 +6,13 @@ import numpy as np
 app = Flask(__name__)
 
 # Load the saved model and scaler
-model = joblib.load('models/random_forest_champion.pkl')
-scaler = joblib.load('models/scaler.pkl')
+try:
+    model = joblib.load('models/random_forest_champion.pkl')
+    scaler = joblib.load('models/scaler.pkl')
+except Exception as e:
+    model = None
+    scaler = None
+    print(f"Warning: Machine learning assets failed to load. {e}")
 
 @app.route('/')
 def home():
