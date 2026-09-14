@@ -1,3 +1,4 @@
+# CI/CD commands for GitHub Actions and Jenkins
 # Every team fills in the commands for their own stack.
 # The CI pipeline calls these targets, so the names must not change.
 #
