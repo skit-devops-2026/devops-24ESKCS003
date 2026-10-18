@@ -12,7 +12,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        "https://loan-app-backend-0nx9.onrender.com/api/auth/login",
         {
           email,
           password,
@@ -71,7 +71,7 @@ const Login = () => {
           onSuccess={async (credentialResponse) => {
             try {
               const res = await axios.post(
-                "http://localhost:5000/api/auth/google-login",
+                "https://loan-app-backend-0nx9.onrender.com/api/auth/google-login",
                 {
                   token: credentialResponse.credential,
                 },

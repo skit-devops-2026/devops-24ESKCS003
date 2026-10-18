@@ -20,9 +20,12 @@ const Register = () => {
   const handleSendOTP = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/auth/send-register-otp", {
-        email: formData.email,
-      });
+      await axios.post(
+        "https://loan-app-backend-0nx9.onrender.com/api/auth/send-register-otp",
+        {
+          email: formData.email,
+        },
+      );
       alert("OTP sent to your email!");
       setStep(2);
     } catch (error) {
@@ -34,7 +37,7 @@ const Register = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/complete-registration",
+        "https://loan-app-backend-0nx9.onrender.com/api/auth/complete-registration",
         {
           ...formData,
           otp,

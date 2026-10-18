@@ -23,7 +23,7 @@ const CompleteProfile = () => {
 
       // Send the missing data to the backend to update the user
       const response = await axios.post(
-        "http://localhost:5000/api/auth/complete-profile",
+        "https://loan-app-backend-0nx9.onrender.com/api/auth/complete-profile",
         { name, mobileNumber },
         { headers: { Authorization: `Bearer ${token}` } },
       );

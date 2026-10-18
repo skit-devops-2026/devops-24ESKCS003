@@ -46,7 +46,7 @@ const LoanForm = ({ onPredictionComplete, prefillData }) => {
     try {
       // 1. Get the REAL prediction from your Python Flask microservice
       const mlResponse = await axios.post(
-        "http://127.0.0.1:5001/predict",
+        "https://loan-ml-service-vnav.onrender.com/predict",
         formData,
       );
       const realPrediction = mlResponse.data.prediction;
@@ -57,7 +57,7 @@ const LoanForm = ({ onPredictionComplete, prefillData }) => {
       // 3. Save to MongoDB via your Node.js backend route
       const token = localStorage.getItem("token");
       const dbResponse = await axios.post(
-        "http://localhost:5000/api/history",
+        "https://loan-app-backend-0nx9.onrender.com/api/history",
         {
           ...formData,
           prediction: realPrediction, // Sending the real prediction to the database

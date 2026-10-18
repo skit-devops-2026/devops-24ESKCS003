@@ -24,9 +24,12 @@ const History = () => {
       }
 
       try {
-        const response = await axios.get("http://localhost:5000/api/history", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get(
+          "https://loan-app-backend-0nx9.onrender.com/api/history",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          },
+        );
         setPredictions(response.data);
       } catch (error) {
         console.error("Failed to fetch history:", error);

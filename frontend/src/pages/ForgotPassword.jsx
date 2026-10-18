@@ -13,9 +13,12 @@ const ForgotPassword = () => {
     e.preventDefault();
     try {
       // Adjust this URL if your backend route is named differently
-      await axios.post("http://localhost:5000/api/auth/forgot-password", {
-        email,
-      });
+      await axios.post(
+        "https://loan-app-backend-0nx9.onrender.com/api/auth/forgot-password",
+        {
+          email,
+        },
+      );
       alert("Password reset OTP sent to your email!");
       setStep(2);
     } catch (error) {
@@ -27,11 +30,14 @@ const ForgotPassword = () => {
     e.preventDefault();
     try {
       // Adjust this URL if your backend route is named differently
-      await axios.post("http://localhost:5000/api/auth/reset-password", {
-        email,
-        otp,
-        newPassword,
-      });
+      await axios.post(
+        "https://loan-app-backend-0nx9.onrender.com/api/auth/reset-password",
+        {
+          email,
+          otp,
+          newPassword,
+        },
+      );
       alert("Password reset successfully! Please log in.");
       navigate("/login");
     } catch (error) {
