@@ -5,9 +5,12 @@ const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const User = require("../models/User");
 
-// Configure Nodemailer transporter
+// Configure Nodemailer transporter for Render
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false, // Must be false for port 587
+  requireTLS: true, // Forces TLS encryption
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
