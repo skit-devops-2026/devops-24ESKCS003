@@ -11,6 +11,7 @@ const transporter = nodemailer.createTransport({
   port: 587,
   secure: false, // Must be false for port 587
   requireTLS: true, // Forces TLS encryption
+  family: 4, // NEW: Forces IPv4 routing to bypass Render's IPv6 limits
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
