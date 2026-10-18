@@ -12,7 +12,6 @@ const transporter = nodemailer.createTransport({
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
-  family: 4, // Forces IPv4 routing to prevent Render network timeouts
 });
 
 // Helper: Generate random 6-digit OTP
