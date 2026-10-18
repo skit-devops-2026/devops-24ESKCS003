@@ -1,19 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: loan-app-deployment
+  name: loan-ml-deployment
+  labels:
+    app: loan-ml-api
 spec:
-  replicas: 1
+  replicas: 2 # Runs two instances of your ML model for high availability
   selector:
     matchLabels:
-      app: loan-app
+      app: loan-ml-api
   template:
     metadata:
       labels:
-        app: loan-app
+        app: loan-ml-api
     spec:
       containers:
-      - name: loan-app
-        image: loan-app:latest
-        ports:
-        - containerPort: 5000
+        - name: loan-ml-container
+          # THIS MUST MATCH THE IMAGE YOU PUSHED IN M5
+          image: aaryansinghshekhawat/loan-ml-service:v1
+          ports:
+            - containerPort: 5000
+          imagePullPolicy: Always

@@ -1,20 +1,18 @@
-# 1. Use a lightweight Python base image
-FROM python:3.10-slim
+# Use a lightweight Python image
+FROM python:3.9-slim
 
-# 2. Set the working directory inside the container
+# Set the working directory inside the container
 WORKDIR /app
 
-# 3. Copy your grocery list first (to optimize caching)
+# Copy dependency list and install them
 COPY requirements.txt .
+RUN pip install --default-timeout=1000 --no-cache-dir -r requirements.txt
 
-# 4. Install all the libraries from your list
-RUN pip install --no-cache-dir -r requirements.txt
-
-# 5. Copy the rest of your project files (app.py, models, templates)
+# Copy the rest of your application code and models
 COPY . .
 
-# 6. Expose the port Flask runs on
+# Expose the port your Python app runs on (usually 5000 for Flask)
 EXPOSE 5000
 
-# 7. Command to start the Flask server
-CMD ["flask", "run", "--host=0.0.0.0", "--port=5000"]
+# Command to run the application
+CMD ["python", "app.py"]
