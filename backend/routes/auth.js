@@ -2,11 +2,7 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { Resend } = require("resend"); // <-- Imported Resend
 const User = require("../models/User");
-
-// Initialize Resend
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Helper: Generate random 6-digit OTP
 const generateOTP = () =>
@@ -33,17 +29,25 @@ router.post("/send-register-otp", async (req, res) => {
       { upsert: true, new: true },
     );
 
-    // --- RESEND EMAIL LOGIC ---
-    const { error } = await resend.emails.send({
-      from: "Loan App <onboarding@resend.dev>",
-      to: email,
-      subject: "Your Registration OTP - Loan Approval System",
-      text: `Your 6-digit verification code is: ${otp}. It expires in 10 minutes.`,
+    // --- BREVO EMAIL LOGIC ---
+    const response = await fetch("https://api.brevo.com/v3/smtp/email", {
+      method: "POST",
+      headers: {
+        "api-key": process.env.BREVO_API_KEY,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        sender: { name: "Loan Approval System", email: "aaryan9983@gmail.com" },
+        to: [{ email: email }],
+        subject: "Your Registration OTP - Loan Approval System",
+        textContent: `Your 6-digit verification code is: ${otp}. It expires in 10 minutes.`,
+      }),
     });
 
-    if (error) {
-      console.error("Resend Error:", error);
-      return res.status(500).json({ error: "Failed to send OTP via Resend." });
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Brevo Error:", errorData);
+      return res.status(500).json({ error: "Failed to send OTP via Brevo." });
     }
 
     res.json({ message: "OTP sent successfully to your email." });
@@ -73,7 +77,6 @@ router.post("/complete-registration", async (req, res) => {
     user.otpExpiry = undefined;
     await user.save();
 
-    // Generate the login token right now!
     const token = jwt.sign(
       { userId: user._id, email: user.email },
       process.env.JWT_SECRET,
@@ -206,17 +209,27 @@ router.post("/forgot-password", async (req, res) => {
     user.resetOtpExpiry = Date.now() + 15 * 60 * 1000;
     await user.save();
 
-    // --- RESEND EMAIL LOGIC ---
-    const { error } = await resend.emails.send({
-      from: "Loan App <onboarding@resend.dev>",
-      to: email,
-      subject: "Password Reset OTP - Loan Approval Predictor",
-      text: `Your password reset OTP is: ${otp}. It is valid for 15 minutes.`,
+    // --- BREVO EMAIL LOGIC ---
+    const response = await fetch("https://api.brevo.com/v3/smtp/email", {
+      method: "POST",
+      headers: {
+        "api-key": process.env.BREVO_API_KEY,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        sender: { name: "Loan Approval System", email: "aaryan9983@gmail.com" },
+        to: [{ email: email }],
+        subject: "Password Reset OTP - Loan Approval Predictor",
+        textContent: `Your password reset OTP is: ${otp}. It is valid for 15 minutes.`,
+      }),
     });
 
-    if (error) {
-      console.error("Resend Error:", error);
-      return res.status(500).json({ error: "Failed to send reset OTP." });
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Brevo Error:", errorData);
+      return res
+        .status(500)
+        .json({ error: "Failed to send reset OTP via Brevo." });
     }
 
     res.json({ message: "OTP sent successfully!" });
