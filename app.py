@@ -7,11 +7,19 @@ import os
 
 app = Flask(__name__)
 CORS(app) # 1. This allows your React frontend to talk to Python safely
+
+# --- ADDED: Root route to pass GitHub Actions and Render health checks ---
+@app.route('/', methods=['GET'])
+def home():
+    return "Loan ML API is running", 200
+# -------------------------------------------------------------------------
+
 @app.route('/health', methods=['GET'])
 def health():
     # Render automatically injects the current commit SHA into this environment variable
     commit_sha = os.environ.get('RENDER_GIT_COMMIT', 'unknown_commit')
     return commit_sha, 200
+
 # Load the saved model and scaler
 try:
     model = joblib.load('models/random_forest_champion.pkl')
@@ -62,5 +70,5 @@ def predict():
         return jsonify({'error': str(e)}), 400
 
 if __name__ == '__main__':
-    # 3. Changed port to 5001 so it doesn't conflict with Node.js
-    app.run(debug=True, port=5001)
+    # --- ADDED: Bind to 0.0.0.0 and port 5000 so Render can detect the app ---
+    app.run(host='0.0.0.0', port=5000)
