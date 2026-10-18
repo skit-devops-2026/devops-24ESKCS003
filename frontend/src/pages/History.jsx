@@ -73,19 +73,9 @@ const History = () => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        gap: "20px",
-        maxWidth: "1000px",
-        margin: "0 auto",
-        alignItems: "flex-start",
-      }}
-    >
-      <div
-        className="form-container"
-        style={{ flex: "1", marginTop: "50px", padding: "20px" }}
-      >
+    <div className="dashboard-wrapper">
+      {/* LEFT SIDE: History List */}
+      <div className="form-container history-panel" style={{ padding: "20px" }}>
         <h2>
           <strong>
             <u>History</u>
@@ -200,7 +190,8 @@ const History = () => {
         </button>
       </div>
 
-      <div className="form-container" style={{ flex: "2", marginTop: "50px" }}>
+      {/* RIGHT SIDE: Prediction Details OR New Prediction Form */}
+      <div className="form-container prediction-panel">
         {selectedPrediction ? (
           <div>
             <h2>

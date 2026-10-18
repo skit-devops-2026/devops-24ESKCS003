@@ -42,58 +42,64 @@ const CompleteProfile = () => {
   };
 
   return (
-    <div className="form-container" style={{ marginTop: "50px" }}>
-      <h2>
-        <strong>
-          <u>Complete Profile</u>
-        </strong>
-      </h2>
+    <div className="auth-wrapper">
+      <div className="form-container auth-card">
+        <h2>
+          <strong>
+            <u>Complete Profile</u>
+          </strong>
+        </h2>
 
-      <div
-        style={{ textAlign: "center", marginBottom: "20px", color: "#7f8fa6" }}
-      >
-        Welcome! Just one last step before we set up your dashboard.
-      </div>
-
-      <form onSubmit={handleSubmit}>
-        <label>
-          <strong>Full Name:</strong>
-        </label>
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-          placeholder="Enter your full name"
-        />
-
-        <label>
-          <strong>Mobile Number:</strong>
-        </label>
-        {/* Changed type from "tel" to "text" so your CSS catches it */}
-        <input
-          type="text"
-          value={mobileNumber}
-          onChange={(e) => setMobileNumber(e.target.value)}
-          required
-          placeholder="e.g. +91 9876543210"
-        />
-
-        {/* Added explicit padding and font sizing to match your main theme */}
-        <button
-          type="submit"
-          id="submitBtn"
+        <div
           style={{
-            marginTop: "20px",
-            width: "100%",
-            padding: "12px",
-            fontSize: "16px",
-            fontWeight: "bold",
+            textAlign: "center",
+            marginBottom: "20px",
+            color: "#7f8fa6",
           }}
         >
-          Save & Continue
-        </button>
-      </form>
+          Welcome! Just one last step before we set up your dashboard.
+        </div>
+
+        <form onSubmit={handleSubmit}>
+          <label>
+            <strong>Full Name:</strong>
+          </label>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            placeholder="Enter your full name"
+          />
+
+          <label>
+            <strong>Mobile Number:</strong>
+          </label>
+          {/* Changed type from "tel" to "text" so your CSS catches it */}
+          <input
+            type="text"
+            value={mobileNumber}
+            onChange={(e) => setMobileNumber(e.target.value)}
+            required
+            placeholder="e.g. +91 9876543210"
+          />
+
+          {/* Added explicit padding and font sizing to match your main theme */}
+          <button
+            type="submit"
+            id="submitBtn"
+            style={{
+              marginTop: "20px",
+              width: "100%",
+              padding: "12px",
+              fontSize: "16px",
+              fontWeight: "bold",
+            }}
+          >
+            Save & Continue
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

@@ -49,63 +49,67 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="form-container" style={{ marginTop: "50px" }}>
-      <h2>
-        <strong>
-          <u>Reset Password</u>
-        </strong>
-      </h2>
+    <div className="auth-wrapper">
+      <div className="form-container auth-card">
+        <h2>
+          <strong>
+            <u>Reset Password</u>
+          </strong>
+        </h2>
 
-      {step === 1 ? (
-        <form onSubmit={handleSendOTP}>
-          <label>
-            <strong>Registered Email Address:</strong>
-          </label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <button type="submit" id="submitBtn">
-            Send Reset OTP
-          </button>
-        </form>
-      ) : (
-        <form onSubmit={handleResetPassword}>
-          <label>
-            <strong>Enter 6-Digit OTP:</strong>
-          </label>
-          <input
-            type="text"
-            value={otp}
-            onChange={(e) => setOtp(e.target.value)}
-            required
-            maxLength="6"
-          />
+        {step === 1 ? (
+          <form onSubmit={handleSendOTP}>
+            <label>
+              <strong>Registered Email Address:</strong>
+            </label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <button type="submit" id="submitBtn">
+              Send Reset OTP
+            </button>
+          </form>
+        ) : (
+          <form onSubmit={handleResetPassword}>
+            <label>
+              <strong>Enter 6-Digit OTP:</strong>
+            </label>
+            <input
+              type="text"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+              required
+              maxLength="6"
+            />
 
-          <label>
-            <strong>New Password:</strong>
-          </label>
-          <input
-            type="password"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-            required
-          />
-          <button type="submit" id="submitBtn">
-            Update Password
-          </button>
-        </form>
-      )}
+            <label>
+              <strong>New Password:</strong>
+            </label>
+            <input
+              type="password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              required
+            />
+            <button type="submit" id="submitBtn">
+              Update Password
+            </button>
+          </form>
+        )}
 
-      <div style={{ marginTop: "20px", textAlign: "center", fontSize: "14px" }}>
-        <p>
-          Remember your password?{" "}
-          <Link to="/login" style={{ color: "#0fbcf9" }}>
-            Login Here
-          </Link>
-        </p>
+        <div
+          style={{ marginTop: "20px", textAlign: "center", fontSize: "14px" }}
+        >
+          <p>
+            Remember your password?{" "}
+            <Link to="/login" style={{ color: "#0fbcf9" }}>
+              Login Here
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );
