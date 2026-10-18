@@ -8,10 +8,9 @@ const User = require("../models/User");
 // Configure Nodemailer transporter for Render
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
-  port: 587,
-  secure: false, // Must be false for port 587
-  requireTLS: true, // Forces TLS encryption
-  family: 4, // NEW: Forces IPv4 routing to bypass Render's IPv6 limits
+  port: 465, // Changed from 587 to 465
+  secure: true, // Must be true for port 465
+  family: 4, // Keeps the IPv4 fix
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
