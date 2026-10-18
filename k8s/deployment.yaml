@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loan-app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: loan-app
+  template:
+    metadata:
+      labels:
+        app: loan-app
+    spec:
+      containers:
+      - name: loan-app
+        image: loan-app:latest
+        ports:
+        - containerPort: 5000
