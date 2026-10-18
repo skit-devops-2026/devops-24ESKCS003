@@ -3,10 +3,15 @@ from flask_cors import CORS
 import joblib
 import pandas as pd
 import numpy as np
+import os
 
 app = Flask(__name__)
 CORS(app) # 1. This allows your React frontend to talk to Python safely
-
+@app.route('/health', methods=['GET'])
+def health():
+    # Render automatically injects the current commit SHA into this environment variable
+    commit_sha = os.environ.get('RENDER_GIT_COMMIT', 'unknown_commit')
+    return commit_sha, 200
 # Load the saved model and scaler
 try:
     model = joblib.load('models/random_forest_champion.pkl')
